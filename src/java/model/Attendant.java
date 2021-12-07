@@ -15,14 +15,16 @@ public class Attendant extends BaseModel {
         private Student sid;
         private boolean attdend;
         private Date adate;
+        private Slot slot;
 
     public Attendant() {
     }
 
-    public Attendant(Student sid, boolean attdend, Date adate) {
+    public Attendant(Student sid, boolean attdend, Date adate, Slot slot) {
         this.sid = sid;
         this.attdend = attdend;
         this.adate = adate;
+        this.slot = slot;
     }
 
     public Student getSid() {
@@ -47,6 +49,14 @@ public class Attendant extends BaseModel {
 
     public void setAdate(Date adate) {
         this.adate = adate;
+    }
+
+    public Slot getSlot() {
+        return slot;
+    }
+
+    public void setSlot(Slot slot) {
+        this.slot = slot;
     }
        
 }

@@ -106,4 +106,30 @@ public class StudentDBContext extends DBContext<Student>{
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
     
+    public ArrayList<Student> listStudent(Student model) {
+        ArrayList<Student> std = new ArrayList<>();
+        try {
+            String sql = "SELECT s.sid,s.sname,s.simage,s.cid,s.available,c.cname "
+                    + "FROM Student s INNER JOIN Class c\n" 
+                    + "ON s.cid = c.cid WHERE s.cid=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, model.getCid().getCid());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Class c = new Class();
+                c.setCid(rs.getInt("cid"));
+                c.setCname(rs.getString("cname"));
+                Student s = new Student();
+                s.setSid(rs.getString("sid"));
+                s.setSname(rs.getString("sname"));
+                s.setImage(rs.getString("simage"));
+                s.setCid(c);
+                s.setAvailable(rs.getBoolean("available"));
+                std.add(s);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(StudentDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return std;
+    }
 }

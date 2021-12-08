@@ -5,21 +5,24 @@
  */
 package controller.attendant;
 
-import dal.ClassDBContext;
-import dal.SlotDBContext;
-import dal.TableDBContext;
+import dal.AttendantDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Attendant;
+import model.Student;
+import model.Table;
+import model.Class;
 
 /**
  *
  * @author Admin
  */
-public class ChangeSlotController extends HttpServlet {
+public class UpdateController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,10 +41,10 @@ public class ChangeSlotController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChangeSlotController</title>");            
+            out.println("<title>Servlet UpdateController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ChangeSlotController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet UpdateController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,11 +62,20 @@ public class ChangeSlotController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        Table table = (Table)request.getSession().getAttribute("table");
+        Attendant a = new Attendant();
+        a.setAdate(table.getCdate());
+        a.setSlot(table.getSlot());       
+        Class c = new Class();
+        c.setCid(table.getClassroom().getCid());
+        Student s = new Student();
+        s.setClassroom(c);
+        a.setStudent(s);
+        ArrayList<Attendant> att = adb.getAttend(a);
+        request.setAttribute("att",att);
+        request.getRequestDispatcher("udetail.jsp").forward(request, response);
     }
-    ClassDBContext cdb=new ClassDBContext();
-    TableDBContext tdb=new TableDBContext();
-    SlotDBContext sdb=new SlotDBContext();
+    AttendantDBContext adb = new AttendantDBContext();
     /**
      * Handles the HTTP <code>POST</code> method.
      *

@@ -20,6 +20,7 @@ import model.Attendant;
 import model.Class;
 import model.Slot;
 import model.Student;
+import model.Table;
 
 /**
  *
@@ -65,16 +66,14 @@ public class AttendController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int cid = Integer.parseInt(request.getParameter("cid"));
-        int slot_id = Integer.parseInt(request.getParameter("slot_id"));
+        Table table = (Table)request.getSession().getAttribute("table");
         Class c = new Class();
-        c.setCid(cid);
+        c.setCid(table.getClassroom().getCid());
         Student s = new Student();
-        s.setCid(c);        
+        s.setClassroom(c);        
         ArrayList<Student> lst = sdb.listStudent(s);
         request.setAttribute("student", lst);
-        request.setAttribute("slot_id", slot_id);
-        request.getRequestDispatcher("test2.jsp").forward(request, response);
+        request.getRequestDispatcher("attend.jsp").forward(request, response);
     }
     ClassDBContext cdb = new ClassDBContext();
     StudentDBContext sdb = new StudentDBContext();
@@ -97,7 +96,7 @@ public class AttendController extends HttpServlet {
             Attendant a=new Attendant();
             Student s = new Student();
             s.setSid(id);
-            a.setSid(s);
+            a.setStudent(s);
             a.setAdate(Date.valueOf(request.getParameter("adate"+id)));
             String attend_raw= request.getParameter("attend"+id);
             a.setAttdend(attend_raw!=null);
@@ -106,8 +105,23 @@ public class AttendController extends HttpServlet {
             a.setSlot(slot);
             lst.add(a);
         }
+        String[] indexs = request.getParameterValues("index");
+        for (String index : indexs) {
+            Attendant a=new Attendant();
+            Student student = new Student();
+            student.setSid(request.getParameter("sid"+index));
+            student.setSname(request.getParameter("sname"+index));
+            a.setStudent(student);
+            a.setAdate(Date.valueOf(request.getParameter("adate"+index)));
+            String attend_raw= request.getParameter("attend"+index);
+            a.setAttdend(attend_raw!=null);
+            Slot slot = new Slot();
+            slot.setSlot_id(Integer.parseInt(request.getParameter("slot_id")));
+            a.setSlot(slot);
+            lst.add(a);
+        }
         adb.takeAttendance(lst);
-        response.getWriter().println("done");
+        request.getRequestDispatcher("update.jsp").forward(request, response);
     }
 
     /**

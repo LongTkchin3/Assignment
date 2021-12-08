@@ -6,11 +6,11 @@
     </servlet>
     <servlet>
         <servlet-name>GetClassController</servlet-name>
-        <servlet-class>controller.table.GetClassController</servlet-class>
+        <servlet-class>controller.table.ListController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChooseClassController</servlet-name>
-        <servlet-class>controller.table.ChooseClassController</servlet-class>
+        <servlet-class>controller.table.GetClassController</servlet-class>
     </servlet>
     <servlet>
         <servlet-name>ChangeSlotController</servlet-name>
@@ -19,6 +19,14 @@
     <servlet>
         <servlet-name>ChangeDateController</servlet-name>
         <servlet-class>controller.attendant.ChangeDateController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>ChangeController</servlet-name>
+        <servlet-class>controller.attendant.ChangeController</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>UpdateController</servlet-name>
+        <servlet-class>controller.attendant.UpdateController</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>AttendController</servlet-name>
@@ -39,6 +47,14 @@
     <servlet-mapping>
         <servlet-name>ChangeDateController</servlet-name>
         <url-pattern>/changedate</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ChangeController</servlet-name>
+        <url-pattern>/change</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>UpdateController</servlet-name>
+        <url-pattern>/update</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

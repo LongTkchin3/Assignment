@@ -12,7 +12,7 @@ import java.sql.Date;
  * @author Admin
  */
 public class Attendant extends BaseModel {
-        private Student sid;
+        private Student student;
         private boolean attdend;
         private Date adate;
         private Slot slot;
@@ -20,19 +20,12 @@ public class Attendant extends BaseModel {
     public Attendant() {
     }
 
-    public Attendant(Student sid, boolean attdend, Date adate, Slot slot) {
-        this.sid = sid;
-        this.attdend = attdend;
-        this.adate = adate;
-        this.slot = slot;
+    public Student getStudent() {
+        return student;
     }
 
-    public Student getSid() {
-        return sid;
-    }
-
-    public void setSid(Student sid) {
-        this.sid = sid;
+    public void setStudent(Student student) {
+        this.student = student;
     }
 
     public boolean isAttdend() {

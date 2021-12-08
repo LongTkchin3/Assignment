@@ -13,18 +13,10 @@ public class Student extends BaseModel {
         private String sid; 
         private String sname;
         private String image;
-        private Class cid;
+        private Class classroom;
         private boolean available;
 
     public Student() {
-    }
-
-    public Student(String sid, String sname, String image, Class cid, boolean available) {
-        this.sid = sid;
-        this.sname = sname;
-        this.image = image;
-        this.cid = cid;
-        this.available = available;
     }
 
     public String getSid() {
@@ -51,12 +43,12 @@ public class Student extends BaseModel {
         this.image = image;
     }
 
-    public Class getCid() {
-        return cid;
+    public Class getClassroom() {
+        return classroom;
     }
 
-    public void setCid(Class cid) {
-        this.cid = cid;
+    public void setClassroom(Class classroom) {
+        this.classroom = classroom;
     }
 
     public boolean isAvailable() {
@@ -67,6 +59,6 @@ public class Student extends BaseModel {
         this.available = available;
     }
 
-    
+
         
 }

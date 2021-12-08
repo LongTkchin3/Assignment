@@ -37,7 +37,7 @@ public class StudentDBContext extends DBContext<Student>{
                 s.setSid(rs.getString("sid"));
                 s.setSname(rs.getString("sname"));
                 s.setImage(rs.getString("simage"));
-                s.setCid(c);
+                s.setClassroom(c);
                 s.setAvailable(rs.getBoolean("available"));
                 std.add(s);
             }
@@ -65,7 +65,7 @@ public class StudentDBContext extends DBContext<Student>{
                 s.setSid(rs.getString("sid"));
                 s.setSname(rs.getString("sname"));
                 s.setImage(rs.getString("simage"));
-                s.setCid(c);
+                s.setClassroom(c);
                 s.setAvailable(rs.getBoolean("available"));
                 return s;
             }
@@ -93,7 +93,7 @@ public class StudentDBContext extends DBContext<Student>{
             stm.setString(5, model.getSid());
             stm.setString(1, model.getSname());
             stm.setString(2, model.getImage());
-            stm.setInt(3, model.getCid().getCid());
+            stm.setInt(3, model.getClassroom().getCid());
             stm.setBoolean(4, model.isAvailable());
             stm.executeUpdate();
         } catch (SQLException ex) {
@@ -113,7 +113,7 @@ public class StudentDBContext extends DBContext<Student>{
                     + "FROM Student s INNER JOIN Class c\n" 
                     + "ON s.cid = c.cid WHERE s.cid=?";
             PreparedStatement stm = connection.prepareStatement(sql);
-            stm.setInt(1, model.getCid().getCid());
+            stm.setInt(1, model.getClassroom().getCid());
             ResultSet rs = stm.executeQuery();
             while (rs.next()) {
                 Class c = new Class();
@@ -123,7 +123,7 @@ public class StudentDBContext extends DBContext<Student>{
                 s.setSid(rs.getString("sid"));
                 s.setSname(rs.getString("sname"));
                 s.setImage(rs.getString("simage"));
-                s.setCid(c);
+                s.setClassroom(c);
                 s.setAvailable(rs.getBoolean("available"));
                 std.add(s);
             }

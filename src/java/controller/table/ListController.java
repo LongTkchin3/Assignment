@@ -5,20 +5,21 @@
  */
 package controller.table;
 
-import dal.ClassDBContext;
+import dal.TableDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Class;
+import model.Table;
 
 /**
  *
  * @author Admin
  */
-public class ChooseClassController extends HttpServlet {
+public class ListController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +38,10 @@ public class ChooseClassController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ChooseClassController</title>");            
+            out.println("<title>Servlet GetClassController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet ChooseClassController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet GetClassController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,16 +59,12 @@ public class ChooseClassController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        int cid = Integer.parseInt(request.getParameter("cid"));
-        int slot_id = Integer.parseInt(request.getParameter("slot_id"));
-        Class c = new Class();
-        c.setCid(cid);
-        Class clas = cdb.get(c);
-        request.setAttribute("clas", clas);
-        request.setAttribute("slot_id", slot_id);
-        request.getRequestDispatcher("test1.jsp").forward(request, response);
+        ArrayList<Table> table = tdb.getClass("SonNT5");
+        request.setAttribute("class", table);
+        request.getRequestDispatcher("list.jsp").forward(request, response);
+        
     }
-    ClassDBContext cdb = new ClassDBContext();
+    TableDBContext tdb = new TableDBContext();
     /**
      * Handles the HTTP <code>POST</code> method.
      *

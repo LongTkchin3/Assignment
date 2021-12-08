@@ -5,14 +5,15 @@
  */
 package controller.table;
 
+import dal.ClassDBContext;
 import dal.TableDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Class;
 import model.Table;
 
 /**
@@ -38,10 +39,10 @@ public class GetClassController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GetClassController</title>");            
+            out.println("<title>Servlet ChooseClassController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GetClassController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ChooseClassController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -59,11 +60,13 @@ public class GetClassController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Table> table = tdb.getClass("SonNT5");
-        request.setAttribute("class", table);
-        request.getRequestDispatcher("test.jsp").forward(request, response);
-        
+        Table t = new Table();
+        t.setId(Integer.parseInt(request.getParameter("id")));
+        Table table = tdb.get(t);
+        request.getSession().setAttribute("table", table);
+        request.getRequestDispatcher("detail.jsp").forward(request, response);
     }
+    ClassDBContext cdb = new ClassDBContext();
     TableDBContext tdb = new TableDBContext();
     /**
      * Handles the HTTP <code>POST</code> method.

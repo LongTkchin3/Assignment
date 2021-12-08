@@ -13,22 +13,14 @@ import java.sql.Date;
  */
 public class Table extends BaseModel {
         private int id;
-        private Class cid;
+        private Class classroom;
         private Date cdate;
-        private Slot slot_id;
-        private Teacher tid;
+        private Slot slot;
+        private Teacher teacher;
 
     public Table() {
     }
-
-    public Table(int id, Class cid, Date cdate, Slot slot_id, Teacher tid) {
-        this.id = id;
-        this.cid = cid;
-        this.cdate = cdate;
-        this.slot_id = slot_id;
-        this.tid = tid;
-    }
-
+    
     public int getId() {
         return id;
     }
@@ -37,12 +29,12 @@ public class Table extends BaseModel {
         this.id = id;
     }
 
-    public Class getCid() {
-        return cid;
+    public Class getClassroom() {
+        return classroom;
     }
 
-    public void setCid(Class cid) {
-        this.cid = cid;
+    public void setClassroom(Class classroom) {
+        this.classroom = classroom;
     }
 
     public Date getCdate() {
@@ -53,21 +45,19 @@ public class Table extends BaseModel {
         this.cdate = cdate;
     }
 
-    public Slot getSlot_id() {
-        return slot_id;
+    public Slot getSlot() {
+        return slot;
     }
 
-    public void setSlot_id(Slot slot_id) {
-        this.slot_id = slot_id;
+    public void setSlot(Slot slot) {
+        this.slot = slot;
     }
 
-    public Teacher getTid() {
-        return tid;
+    public Teacher getTeacher() {
+        return teacher;
     }
 
-    public void setTid(Teacher tid) {
-        this.tid = tid;
-    }
-
-   
+    public void setTeacher(Teacher teacher) {
+        this.teacher = teacher;
+    } 
 }

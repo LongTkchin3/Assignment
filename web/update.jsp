@@ -1,6 +1,6 @@
 <%-- 
-    Document   : test1
-    Created on : Dec 7, 2021, 3:32:16 PM
+    Document   : update
+    Created on : Dec 8, 2021, 10:04:44 PM
     Author     : Admin
 --%>
 
@@ -20,16 +20,13 @@
                 <th>Slot</th>
                 <th></th>
                 <th></th>
-                <th></th>
             </tr>
             <tr>
                 <td>1</td>
-                <td>${requestScope.clas.cname}</td>
+                <td>${sessionScope.table.classroom.cname}</td>
                 <td></td>
                 <td></td>
-                <td><a href="attend?cid=${requestScope.clas.cid}&slot_id=${requestScope.slot_id}" >take attendance</a></td>
-                <td><a href="" >change slot</a></td>
-                <td><a href="" >change date</a></td>
+                <td><a href="update" >Update</a></td>
             </tr>
         </table>
     </body>

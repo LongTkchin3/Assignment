@@ -47,10 +47,10 @@ public class TableDBContext extends DBContext<Table> {
                 c.setCname(rs.getString("cname"));
                 Table tab = new Table();
                 tab.setId(rs.getInt("id"));
-                tab.setCid(c);
+                tab.setClassroom(c);
                 tab.setCdate(rs.getDate("cdate"));
-                tab.setSlot_id(s);
-                tab.setTid(t);
+                tab.setSlot(s);
+                tab.setTeacher(t);
                 table.add(tab);
             }
         } catch (SQLException ex) {
@@ -61,7 +61,37 @@ public class TableDBContext extends DBContext<Table> {
 
     @Override
     public Table get(Table model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        try {
+            String sql = "SELECT t.id,t.cid,t.cdate,t.slot_id,t.tid,c.cname,s.sname,Teacher.tname,Teacher.timage "
+                    + "From [Table] t Inner join Class c on t.cid=c.cid "
+                    + "Inner join Slot s on t.slot_id=s.slot_id "
+                    + "Inner join Teacher on t.tid=Teacher.tid  WHERE t.id =?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1,model.getId());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Slot s = new Slot();
+                s.setSlot_id(rs.getInt("slot_id"));
+                s.setName(rs.getString("sname"));
+                Teacher t = new Teacher();
+                t.setTid(rs.getString("tid"));
+                t.setTname(rs.getString("tname"));
+                t.setImage(rs.getString("timage"));
+                Class c = new Class();
+                c.setCid(rs.getInt("cid"));
+                c.setCname(rs.getString("cname"));
+                Table tab = new Table();
+                tab.setId(rs.getInt("id"));
+                tab.setClassroom(c);
+                tab.setCdate(rs.getDate("cdate"));
+                tab.setSlot(s);
+                tab.setTeacher(t);
+                return tab;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(TableDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     @Override
@@ -71,7 +101,19 @@ public class TableDBContext extends DBContext<Table> {
 
     @Override
     public void update(Table model) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+         try {
+            String sql = "UPDATE [Table]\n"
+                    + "   SET [cdate] = ? \n"  
+                    + "      ,[slot_id] = ?\n"
+                    + " WHERE [id] = ?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(3, model.getId());
+            stm.setDate(1, model.getCdate());
+            stm.setInt(2, model.getSlot().getSlot_id());
+            stm.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(TableDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @Override
@@ -125,10 +167,10 @@ public class TableDBContext extends DBContext<Table> {
                 c.setCname(rs.getString("cname"));
                 Table tab = new Table();
                 tab.setId(rs.getInt("id"));
-                tab.setCid(c);
+                tab.setClassroom(c);
                 tab.setCdate(rs.getDate("cdate"));
-                tab.setSlot_id(s);
-                tab.setTid(t);
+                tab.setSlot(s);
+                tab.setTeacher(t);
                 table.add(tab);
             }
         } catch (SQLException ex) {

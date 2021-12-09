@@ -6,6 +6,7 @@
 package controller.table;
 
 import dal.TableDBContext;
+import dal.TeacherDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import model.Table;
+import model.Teacher;
 
 /**
  *
@@ -59,11 +61,11 @@ public class ListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Table> table = tdb.getClass("SonNT5");
-        request.setAttribute("class", table);
-        request.getRequestDispatcher("list.jsp").forward(request, response);
-        
+        ArrayList<Teacher> teachers = teacherdb.list();
+        request.setAttribute("teachers", teachers);
+        request.getRequestDispatcher("home.jsp").forward(request, response);
     }
+    TeacherDBContext teacherdb = new TeacherDBContext();
     TableDBContext tdb = new TableDBContext();
     /**
      * Handles the HTTP <code>POST</code> method.
@@ -76,7 +78,10 @@ public class ListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String tid = request.getParameter("tid");
+        ArrayList<Table> table = tdb.getClass(tid);
+        request.setAttribute("class", table);
+        request.getRequestDispatcher("list.jsp").forward(request, response);
     }
 
     /**

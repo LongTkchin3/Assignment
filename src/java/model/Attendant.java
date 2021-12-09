@@ -13,7 +13,7 @@ import java.sql.Date;
  */
 public class Attendant extends BaseModel {
         private Student student;
-        private boolean attdend;
+        private boolean attend;
         private Date adate;
         private Slot slot;
 
@@ -28,12 +28,12 @@ public class Attendant extends BaseModel {
         this.student = student;
     }
 
-    public boolean isAttdend() {
-        return attdend;
+    public boolean isAttend() {
+        return attend;
     }
 
-    public void setAttdend(boolean attdend) {
-        this.attdend = attdend;
+    public void setAttend(boolean attdend) {
+        this.attend = attdend;
     }
 
     public Date getAdate() {

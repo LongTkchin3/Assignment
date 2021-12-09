@@ -127,7 +127,8 @@ public class TableDBContext extends DBContext<Table> {
             String sql = "SELECT t.id,t.cid,t.cdate,t.slot_id,t.tid,c.cname,s.sname,Teacher.tname,Teacher.timage "
                     + "From [Table] t Inner join Class c on t.cid=c.cid "
                     + "Inner join Slot s on t.slot_id=s.slot_id "
-                    + "Inner join Teacher on t.tid=Teacher.tid WHERE 1=1";
+                    + "Inner join Teacher on t.tid=Teacher.tid "
+                    + "WHERE 1=1";
 //            String sql = "SELECT s.sid,s.sname,s.gender,s.dob,d.did,d.dname\n" +
 //                    "FROM Student s INNER JOIN Department d\n" +
 //                    "ON s.did = d.did WHERE 1=1 ";

@@ -8,6 +8,7 @@ package controller.attendant;
 import dal.AttendantDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -17,6 +18,7 @@ import model.Attendant;
 import model.Student;
 import model.Table;
 import model.Class;
+import model.Slot;
 
 /**
  *
@@ -87,7 +89,23 @@ public class UpdateController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        ArrayList<Attendant> lst = new ArrayList<>();
+        String[] sid = request.getParameterValues("sid");
+        for (String id : sid) {
+            Attendant a = new Attendant();
+            Student s = new Student();
+            s.setSid(id);
+            a.setStudent(s);
+            a.setAdate(Date.valueOf(request.getParameter("adate" + id)));
+            String attend_raw = request.getParameter("attend" + id);
+            a.setAttend(attend_raw != null);
+            Slot slot = new Slot();
+            slot.setSlot_id(request.getParameter("slot_id")==null?(-1):Integer.parseInt(request.getParameter("slot_id")));
+            a.setSlot(slot);
+            lst.add(a);
+        }
+        adb.update(lst);
+        response.sendRedirect("list");
     }
 
     /**

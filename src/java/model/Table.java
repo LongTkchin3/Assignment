@@ -17,6 +17,7 @@ public class Table extends BaseModel {
         private Date cdate;
         private Slot slot;
         private Teacher teacher;
+        private String dow;
 
     public Table() {
     }
@@ -60,4 +61,13 @@ public class Table extends BaseModel {
     public void setTeacher(Teacher teacher) {
         this.teacher = teacher;
     } 
+
+    public String getDow() {
+        return dow;
+    }
+
+    public void setDow(String dow) {
+        this.dow = dow;
+    }
+    
 }

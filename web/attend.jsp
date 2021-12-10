@@ -11,7 +11,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css">
+        <title>FPT University</title><link rel="shortcut icon" type="image/png" href="https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png"/>
         <script>
             var index = 0;
             function addStudent()
@@ -38,24 +39,57 @@
         </script>
     </head>
     <body>
+        <nav class="navbar navbar-expand-lg navbar-light fixed-top " style="background-color: white;max-height: 100px">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="list">
+                    <img src="https://upload.wikimedia.org/wikipedia/vi/1/1d/Logo_%C4%90%E1%BA%A1i_h%E1%BB%8Dc_FPT.png" style="max-width: 75px;" alt="">
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active"  href="list">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="">Take attend</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="">Update</a>
+                        </li>
+                    </ul>
+                </div>
+                <ul class="nav nav-pills justify-content-end">
+                    <li class="nav-item">
+                        <a class="nav-link disabled">${sessionScope.tid}</a>
+                    </li>
+                </ul>
+            </div>
+        </nav><br><br><br>
+        <%--------------------------------------------------------------------%>
         <form action="attend" method="post">
             <div>
-                <table border="1px">
-                    <tr>
-                        <td>MSSV</td>
-                        <td>Name</td>
-                        <td>Date</td>
-                        <td>Present</td>
-                    </tr>
-                    <c:forEach items="${requestScope.student}" var="r">
+                <table class="table">
+                    <thead class="thead-dark">
                         <tr>
-                            <td><input type="text" readonly="true" name="sname" value="${r.sname}"/></td>
-                            <td><input type="text" readonly="true" name="sid" value="${r.sid}"/></td>
-                            <td><input type="date" name="adate${r.sid}" value="${sessionScope.table.cdate}"/></td>
-                            <td><input type="hidden" name="slot_id" value="${sessionScope.table.slot.slot_id}"/>
-                                <input type="checkbox" name="attend${r.sid}"/></td>
+                            <th>MSSV</th>
+                            <th>Name</th>
+                            <th>Date</th>
+                            <th>Present</th>
                         </tr>
-                    </c:forEach>    
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${requestScope.student}" var="r">
+                            <tr>
+                                <td><input type="text" readonly="true" name="sname" value="${r.sname}"/></td>
+                                <td><input type="text" readonly="true" name="sid" value="${r.sid}"/></td>
+                                <td><input type="date" name="adate${r.sid}" value="${sessionScope.table.cdate}"/></td>
+                                <td><input type="hidden" name="slot_id" value="${sessionScope.table.slot.slot_id}"/>
+                                    <input type="checkbox" name="attend${r.sid}"/></td>
+                            </tr>
+                        </c:forEach>  
+                    </tbody>  
                 </table>
                 <input type="button" value="Add Student" onclick="addStudent();" />
             </div>
@@ -63,5 +97,10 @@
             </div>
             <input type="submit" value="Save"/>
         </form>
+
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
     </body>
 </html>

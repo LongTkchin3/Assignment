@@ -5,15 +5,21 @@
  */
 package controller.table;
 
+import dal.SlotDBContext;
 import dal.TableDBContext;
 import dal.TeacherDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import model.Slot;
 import model.Table;
 import model.Teacher;
 
@@ -67,6 +73,7 @@ public class ListController extends HttpServlet {
     }
     TeacherDBContext teacherdb = new TeacherDBContext();
     TableDBContext tdb = new TableDBContext();
+    SlotDBContext sdb = new SlotDBContext();
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -79,8 +86,17 @@ public class ListController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String tid = request.getParameter("tid");
+        request.getSession().setAttribute("tid", tid);
         ArrayList<Table> table = tdb.getClass(tid);
+        for (Table t : table) {
+        Calendar cal = Calendar.getInstance();
+        cal.set(t.getCdate().getYear()+1, t.getCdate().getMonth(),t.getCdate().getDay());
+        DateFormat formatter = new SimpleDateFormat("EEEE", Locale.getDefault());
+        t.setDow(formatter.format(cal.getTime()));
+        }
         request.setAttribute("class", table);
+        ArrayList<Slot> slot = sdb.list(); 
+        request.setAttribute("slot", slot);  
         request.getRequestDispatcher("list.jsp").forward(request, response);
     }
 

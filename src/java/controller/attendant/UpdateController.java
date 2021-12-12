@@ -6,6 +6,7 @@
 package controller.attendant;
 
 import dal.AttendantDBContext;
+import dal.StudentDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.Date;
@@ -78,6 +79,7 @@ public class UpdateController extends HttpServlet {
         request.getRequestDispatcher("udetail.jsp").forward(request, response);
     }
     AttendantDBContext adb = new AttendantDBContext();
+    StudentDBContext sdb = new StudentDBContext();
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -89,6 +91,7 @@ public class UpdateController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Table t = (Table)request.getSession().getAttribute("table");
         ArrayList<Attendant> lst = new ArrayList<>();
         String[] sid = request.getParameterValues("sid");
         for (String id : sid) {
@@ -105,6 +108,18 @@ public class UpdateController extends HttpServlet {
             lst.add(a);
         }
         adb.update(lst);
+        ArrayList<String> check = adb.getAvailable(t);
+        check.forEach((string) -> {
+            Student s = new Student();
+            String[] a = string.split("-");
+            int x = Integer.parseInt(a[1]);
+            if (x<6) {
+                s.setSid(a[0]);
+                Student student = sdb.get(s);
+                student.setAvailable(true);
+                sdb.update(student);
+            }
+        });
         response.sendRedirect("list");
     }
 

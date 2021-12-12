@@ -17,6 +17,7 @@ import java.util.logging.Logger;
 import model.Attendant;
 import model.Slot;
 import model.Student;
+import model.Table;
 
 /**
  *
@@ -51,6 +52,7 @@ public class AttendantDBContext extends DBContext<Attendant> {
 
     public void takeAttendance(ArrayList<Attendant> atte) {
         try {
+            connection.setAutoCommit(false);
             String sql = "INSERT INTO [Attendant]\n"
                     + "            ([sid]\n"
                     + "           ,[attend]\n"
@@ -61,7 +63,6 @@ public class AttendantDBContext extends DBContext<Attendant> {
                     + "           ,?\n"
                     + "           ,?\n"
                     + "           ,?)";
-            connection.setAutoCommit(false);
             for (Attendant att : atte) {
                 PreparedStatement stm = connection.prepareStatement(sql);
                 stm.setString(1, att.getStudent().getSid());
@@ -225,4 +226,29 @@ public class AttendantDBContext extends DBContext<Attendant> {
         }
         return attends;
     }
+
+    public ArrayList<String> getAvailable(Table model) {
+        ArrayList<String> student = new ArrayList<>();
+        try {
+            String sql = "SELECT a.[sid],COUNT(attend) as count\n"
+                    + "FROM Attendant a inner join Student s \n"
+                    + "ON a.[sid] = s.[sid]\n"
+                    + "WHERE attend = 0 and cid=? and slot_id=?\n"
+                    + "GROUP BY a.[sid]";
+           
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setInt(1, model.getClassroom().getCid());
+            stm.setInt(2, model.getSlot().getSlot_id());
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                String check = rs.getString("sid");
+                check+="-"+rs.getString("count");          
+                student.add(check);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(AttendantDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return student;
+    }
+
 }

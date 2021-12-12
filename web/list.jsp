@@ -28,13 +28,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active"  href="list">Home</a>
+                            <a class="nav-link"  href="list">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="">Take attend</a>
+                            <a class="nav-link active" style="color: red;"href="list.jsp">Table</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link disabled" href="">Take</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link disabled" href="">Update</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="add">Add</a>
                         </li>
                     </ul>    
                 </div>
@@ -47,7 +53,7 @@
         </nav><br><br><br>
         <%--------------------------------------------------------------------%>
         <c:choose>
-            <c:when test="${requestScope.class!=null}">
+            <c:when test="${not empty sessionScope.class}">
                 <table class="table container">
                     <thead class="thead-dark">
                         <tr style="text-align: center;">
@@ -62,107 +68,114 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <c:forEach items="${requestScope.slot}" var="s">  
+                        <c:forEach items="${sessionScope.slot}" var="s">  
                             <tr style="border-top:1px solid #dee2e6;text-align: center;">
                                 <td>${s.name}<td>
-                                    <c:forEach items="${requestScope.class}" var="c">
+                                    <% int count = 0, x = 0;%>
+                                    <c:forEach items="${sessionScope.class}" var="c">                                      
                                         <c:choose>
                                             <%-- Monday --%>
-
                                             <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Monday'}">
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
                                             </td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <%count++;%>
                                         </c:when>
 
                                         <%-- Tuesday --%>
 
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Tuesday'}">
-                                            <td></td>
+                                            <%if (count == 0) {
+                                                    x = 1;
+                                                } else {
+                                                    x = 1 - x - 1;
+                                                }
+                                            %>
+                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
-                                            </td>   
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            </td>
+                                            <%count++;%>
                                         </c:when>
 
                                         <%-- Wednesday --%>
 
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Wednesday'}">
-                                            <td></td>
-                                            <td></td>
+                                            <%if (count == 0) {
+                                                    x = 2;
+                                                } else {
+                                                    x = 2 - x - 1;
+                                                }
+                                            %>
+                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
-                                            </td>                                          
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            </td>
+                                            <%count++;%>
                                         </c:when>
 
                                         <%-- Thursday --%>
 
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Thursday'}">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <%if (count == 0) {
+                                                    x = 3;
+                                                } else {
+                                                    x = 3 - x - 1;
+                                                }
+                                            %>
+                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
-                                            </td>   
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            </td>
+                                            <%count++;%>
                                         </c:when>
 
                                         <%-- Friday --%>
 
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Friday'}">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <%if (count == 0) {
+                                                    x = 4;
+                                                } else {
+                                                    x = 4 - x - 1;
+                                                }
+                                            %>
+                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
-                                            </td>                                             
-                                            <td></td>
-                                            <td></td>
+                                            </td>
+                                            <%count++;%>
                                         </c:when>
 
                                         <%-- Saturday--%>
 
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Saturday'}">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <%if (count == 0) {
+                                                    x = 5;
+                                                } else {
+                                                    x = 5 - x - 1;
+                                                }
+                                            %>
+                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
-                                            </td>                                               
-                                            <td></td>
+                                            </td>
+                                            <%count++;%>
                                         </c:when>
 
                                         <%-- Sunday--%>
 
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Sunday'}">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <%if (count == 0) {
+                                                    x = 6;
+                                                } else {
+                                                    x = 6 - x - 1;
+                                                }
+                                            %>
+                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>       
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
-                                            </td>                                               
+                                            </td>
+                                            <%count++;%>
                                         </c:when>
                                     </c:choose>
                                 </c:forEach> 
@@ -173,13 +186,17 @@
                 </table>
             </c:when>
             <c:otherwise>
-                <h4>Choose teacher to continue</h4>
-            </c:otherwise>
-        </c:choose>
+                <table class="table">
+                    <thead class="thead-dark">
+                    <th style="text-align: center;">Choose Teacher to continue</th>
+                </thead>
+            </table>
+        </c:otherwise>
+    </c:choose>
 
 
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-    </body>   
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+</body>   
 </html>

@@ -81,6 +81,7 @@ public class ChangeController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         Table table = (Table)request.getSession().getAttribute("table");
+        Slot slot= table.getSlot();
         Table t = new Table();
         t.setId(table.getId());
         Slot s = new Slot();
@@ -89,8 +90,18 @@ public class ChangeController extends HttpServlet {
         Date cdate = Date.valueOf(request.getParameter("cdate"));
         t.setCdate(cdate);
         t.setSlot(s);
+        Table tab = tdb.getTable(t);
+        if (tab==null) {
         tdb.update(t);
-        response.sendRedirect("list");
+        tdb.updateAttend(t,slot);
+        response.sendRedirect("list");   
+        }else{
+        request.setAttribute("msg", "Had Class in this slot! \nPlease change another slot or another date");
+        ArrayList<Slot> slots = sdb.list();
+        request.setAttribute("slot", slots);
+        request.getRequestDispatcher("change.jsp").forward(request, response);
+        }
+
     }
 
     /**

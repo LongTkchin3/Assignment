@@ -71,8 +71,8 @@ public class AttendController extends HttpServlet {
         c.setCid(table.getClassroom().getCid());
         Student s = new Student();
         s.setClassroom(c);
-        ArrayList<Student> lst = sdb.listStudent(s);
-        request.setAttribute("student", lst);
+        ArrayList<Student> students = sdb.listStudent(s);
+        request.setAttribute("student", students);
         request.getRequestDispatcher("attend.jsp").forward(request, response);
     }
     ClassDBContext cdb = new ClassDBContext();
@@ -90,6 +90,7 @@ public class AttendController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Table t = (Table) request.getSession().getAttribute("table");
         ArrayList<Attendant> lst = new ArrayList<>();
         String[] sid = request.getParameterValues("sid");
         for (String id : sid) {
@@ -123,6 +124,18 @@ public class AttendController extends HttpServlet {
             }
         }
         adb.takeAttendance(lst);
+        ArrayList<String> check = adb.getAvailable(t);
+        check.forEach((string) -> {
+            Student s = new Student();
+            String[] a = string.split("-");
+            int x = Integer.parseInt(a[1]);
+            if (x > 5) {
+                s.setSid(a[0]);
+                Student student = sdb.get(s);
+                student.setAvailable(false);
+                sdb.update(student);
+            }
+        });
         request.getRequestDispatcher("update.jsp").forward(request, response);
     }
 

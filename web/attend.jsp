@@ -22,15 +22,8 @@
                 var div = document.createElement("div");
                 div.setAttribute("id", "student" + index);
                 container.appendChild(div);
-                div.innerHTML += "<input type=\"hidden\" value=\"" + index + "\" name=\"index\"/>";
-                div.innerHTML += "MSSV:<input type=\"text\" name=\"sid" + index + "\" /><br>";
-                div.innerHTML += "Name:<input type=\"text\" name=\"sname" + index + "\" /><br>";
-                div.innerHTML += "Date:<input type=\"date\" name=\"adate" + index + "\" value=\"${sessionScope.table.cdate}\"/><br>";
-                div.innerHTML += "Present:<input type=\"checkbox\" name=\"attend" + index + "\"/><br>";
-                div.innerHTML += "<input type=\"hidden\" value=\"true\" name=\"available" + index + "\"/>";
-                div.innerHTML += "<input type=\"button\" value=\"Remove\" onclick=\"removeStudent(" + index + ");\" />";
+                div.innerHTML += "<table class=\"table\"><tr style=\"text-align: center;\"><td><input type=\"hidden\" value=\"" + index + "\" name=\"index\"/><input type=\"text\" required=\"true\" name=\"sid" + index + "\"placeholder=\"MSSV\" /></td><td><input type=\"text\" name=\"sname" + index + "\" placeholder=\"Name\"/></td><td><input type=\"date\" name=\"adate" + index + "\" value=\"${sessionScope.table.cdate}\"/></td><td><input type=\"checkbox\" name=\"attend" + index + "\"/></td><td><input type=\"hidden\" value=\"true\" name=\"available" + index + "\"/><button class=\"btn btn-outline-danger\" onclick=\"removeStudent(" + index + ");\">X</button></td></tr></table>";
             }
-
             function removeStudent(index) {
                 var container = document.getElementById("container");
                 var div = document.getElementById("student" + index);
@@ -50,13 +43,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active"  href="list">Home</a>
+                            <a class="nav-link"  href="list">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="">Take attend</a>
+                            <a class="nav-link" href="list.jsp">Table</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="">Update</a>
+                            <a class="nav-link active" style="color: red;" href="attend?cid=${sessionScope.table.classroom.cid}&slot_id=${sessionScope.table.slot.slot_id}">Take</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="update.jsp">Update</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="add">Add</a>
                         </li>
                     </ul>
                 </div>
@@ -72,30 +71,31 @@
             <div>
                 <table class="table">
                     <thead class="thead-dark">
-                        <tr>
+                        <tr style="text-align: center;">
                             <th>MSSV</th>
                             <th>Name</th>
                             <th>Date</th>
-                            <th>Present</th>
+                            <th><input class="btn btn-outline-primary " type="button" value="Add Student" onclick="addStudent();"/></th>
                         </tr>
                     </thead>
                     <tbody>
                         <c:forEach items="${requestScope.student}" var="r">
-                            <tr>
+                            <tr style="text-align: center;">                                  
+                                <td><input type="text"  readonly="true" name="sid" value="${r.sid}"/></td>
                                 <td><input type="text" readonly="true" name="sname" value="${r.sname}"/></td>
-                                <td><input type="text" readonly="true" name="sid" value="${r.sid}"/></td>
                                 <td><input type="date" name="adate${r.sid}" value="${sessionScope.table.cdate}"/></td>
                                 <td><input type="hidden" name="slot_id" value="${sessionScope.table.slot.slot_id}"/>
                                     <input type="checkbox" name="attend${r.sid}"/></td>
                             </tr>
-                        </c:forEach>  
+                        </c:forEach>
+
                     </tbody>  
-                </table>
-                <input type="button" value="Add Student" onclick="addStudent();" />
+                </table> 
+                <div id="container">
+                </div>              
             </div>
-            <div id="container">
-            </div>
-            <input type="submit" value="Save"/>
+
+            <input class="btn btn-outline-success" style="float: right;margin-right: 40px;"  type="submit" value="Save"/>
         </form>
 
 

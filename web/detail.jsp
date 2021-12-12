@@ -25,13 +25,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link active"  href="list">Home</a>
+                            <a class="nav-link"  href="list">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="">Take attend</a>
+                            <a class="nav-link" href="list.jsp">Table</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link disabled" href="">Update</a>
+                            <a class="nav-link" href="attend?cid=${sessionScope.table.classroom.cid}&slot_id=${sessionScope.table.slot.slot_id}">Take</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="update.jsp">Update</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link " href="add">Add</a>
                         </li>
                     </ul>    
                 </div>
@@ -45,7 +51,7 @@
         <%--------------------------------------------------------------------%>
         <table class="table">
             <thead class="thead-dark">
-                <tr>
+                <tr style="text-align: center;">
                     <th>Môn Học</th>
                     <th>Ngày</th>
                     <th>Slot</th>
@@ -53,16 +59,16 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
+                <tr style="text-align: center;">
                     <td>${sessionScope.table.classroom.cname}</td>
                     <td>${sessionScope.table.cdate}</td>
                     <td>${sessionScope.table.slot.name}</td>
                     <td><ul class="nav nav-pills nav-fill">
                             <li class="nav-item">
-                                <a class="nav-link" href="attend?cid=${sessionScope.table.classroom.cid}&slot_id=${sessionScope.table.slot.slot_id}" >Take</a>
+                                <a class="btn btn-outline-success" href="attend?cid=${sessionScope.table.classroom.cid}&slot_id=${sessionScope.table.slot.slot_id}" >Take</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="change">Change</a>
+                                <a class="btn btn-outline-success" href="change">Change</a>
                             </li>
                         </ul>
                     </td>

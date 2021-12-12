@@ -21,7 +21,22 @@ public class ClassDBContext extends DBContext<Class> {
 
     @Override
     public ArrayList<Class> list() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        ArrayList<Class> clas = new ArrayList<>();
+        try {
+            String sql = "SELECT cid,cname "
+                    + "FROM Class";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Class c = new Class();
+                c.setCid(rs.getInt("cid"));
+                c.setCname(rs.getString("cname"));
+                clas.add(c);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ClassDBContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return clas;
     }
 
     @Override

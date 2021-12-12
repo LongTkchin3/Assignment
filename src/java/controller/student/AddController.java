@@ -3,31 +3,25 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package controller.table;
+package controller.student;
 
-import dal.SlotDBContext;
-import dal.TableDBContext;
-import dal.TeacherDBContext;
+import dal.ClassDBContext;
+import dal.StudentDBContext;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Locale;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import model.Slot;
-import model.Table;
-import model.Teacher;
+import model.Class;
+import model.Student;
 
 /**
  *
  * @author Admin
  */
-public class ListController extends HttpServlet {
+public class AddController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -46,10 +40,10 @@ public class ListController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet GetClassController</title>");            
+            out.println("<title>Servlet AddController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet GetClassController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet AddController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,13 +61,12 @@ public class ListController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        ArrayList<Teacher> teachers = teacherdb.list();
-        request.setAttribute("teachers", teachers);
-        request.getRequestDispatcher("home.jsp").forward(request, response);
+        ArrayList<Class> lst = cdb.list();
+        request.getSession().setAttribute("clas", lst);
+        request.getRequestDispatcher("add.jsp").forward(request, response);
     }
-    TeacherDBContext teacherdb = new TeacherDBContext();
-    TableDBContext tdb = new TableDBContext();
-    SlotDBContext sdb = new SlotDBContext();
+    ClassDBContext cdb = new ClassDBContext();
+    StudentDBContext sdb = new StudentDBContext();
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -85,19 +78,27 @@ public class ListController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String tid = request.getParameter("tid");
-        request.getSession().setAttribute("tid", tid);
-        ArrayList<Table> table = tdb.getClass(tid);
-        for (Table t : table) {
-        Calendar cal = Calendar.getInstance();
-        cal.set(t.getCdate().getYear()+1, t.getCdate().getMonth(),t.getCdate().getDay());
-        DateFormat formatter = new SimpleDateFormat("EEEE", Locale.getDefault());
-        t.setDow(formatter.format(cal.getTime()));
-        }
-        request.getSession().setAttribute("class", table);
-        ArrayList<Slot> slot = sdb.list(); 
-        request.getSession().setAttribute("slot", slot);  
-        request.getRequestDispatcher("list.jsp").forward(request, response);
+        String sid = request.getParameter("sid");
+        String sname = request.getParameter("sname");
+        int cid = Integer.parseInt(request.getParameter("cid"));
+        Class clas = new Class();
+        clas.setCid(cid);
+        Class c = cdb.get(clas);
+        Student s = new Student();
+        s.setSid(sid);
+        Student scheck = sdb.get(s);
+        if (scheck!=null) {
+        request.setAttribute("msg", "MSSV had been used!");
+        request.getRequestDispatcher("add.jsp").forward(request, response);
+        }else{
+        s.setSname(sname);
+        s.setClassroom(c);
+        s.setAvailable(true);
+        sdb.insert(s);
+        request.setAttribute("msg", "Add successful!");
+        request.getRequestDispatcher("add.jsp").forward(request, response);
+        }        
+        
     }
 
     /**

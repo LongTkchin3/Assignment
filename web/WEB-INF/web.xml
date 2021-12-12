@@ -28,6 +28,10 @@
         <servlet-name>UpdateController</servlet-name>
         <servlet-class>controller.attendant.UpdateController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>AddController</servlet-name>
+        <servlet-class>controller.student.AddController</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>AttendController</servlet-name>
         <url-pattern>/attend</url-pattern>
@@ -55,6 +59,10 @@
     <servlet-mapping>
         <servlet-name>UpdateController</servlet-name>
         <url-pattern>/update</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>AddController</servlet-name>
+        <url-pattern>/add</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

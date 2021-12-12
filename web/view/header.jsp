@@ -6,10 +6,10 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
-      integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
-      crossorigin="anonymous"
+    rel="stylesheet"
+    href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+    integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+    crossorigin="anonymous"
     />
 <nav class="navbar navbar-expand-lg navbar-light fixed-top " style="background-color: white;max-height: 100px">
     <div class="container-fluid">
@@ -25,10 +25,16 @@
                     <a class="nav-link active" style="color: red;" href="list">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link disabled" href="">Take attend</a>
+                    <a class="nav-link disabled" href="list.jsp">Table</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="">Take</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link disabled" href="">Update</a>
+                </li>
+                <li class="nav-item">
+                            <a class="nav-link " href="add">Add</a>
                 </li>
             </ul>
         </div>

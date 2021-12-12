@@ -135,7 +135,7 @@ public class TableDBContext extends DBContext<Table> {
             HashMap<Integer, Object[]> parameters = new HashMap<>();
             int indexParam = 0;
             if (tid.length() > 0) {
-                sql += " AND Teacher.tid like '%'+?+'%'";
+                sql += " AND Teacher.tid like '%'+?+'%' ORDER BY cdate ASC";
                 indexParam++;
                 Object[] params = new Object[2];
                 params[0] = String.class.getTypeName();

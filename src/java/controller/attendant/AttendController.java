@@ -113,18 +113,6 @@ public class AttendController extends HttpServlet {
                 Student student = new Student();
                 student.setSid(request.getParameter("sid" + index));
                 student.setSname(request.getParameter("sname" + index));
-                Student stu = sdb.get(student);
-                if (stu != null) {
-                    request.setAttribute("msg", "StudentID(MSSV) doesn't exsit.Please add student before take attendance!");
-                    Table table = (Table) request.getSession().getAttribute("table");
-                    Class c = new Class();
-                    c.setCid(table.getClassroom().getCid());
-                    Student s = new Student();
-                    s.setClassroom(c);
-                    ArrayList<Student> students = sdb.listStudent(s);
-                    request.setAttribute("student", students);
-                    request.getRequestDispatcher("attend.jsp").forward(request, response);
-                }
                 a.setStudent(student);
                 a.setAdate(Date.valueOf(request.getParameter("adate" + index)));
                 String attend_raw = request.getParameter("attend" + index);

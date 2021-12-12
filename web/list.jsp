@@ -71,107 +71,107 @@
                         <c:forEach items="${sessionScope.slot}" var="s">  
                             <tr style="border-top:1px solid #dee2e6;text-align: center;">
                                 <td>${s.name}<td>
-                                    <% int count = 0, x = 0;%>
+                                    <% int count = 0, x = 0, temp = 0;%>
                                     <c:forEach items="${sessionScope.class}" var="c">                                      
                                         <c:choose>
                                             <%-- Monday --%>
+
                                             <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Monday'}">
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
                                             </td>
                                             <%count++;%>
                                         </c:when>
-
                                         <%-- Tuesday --%>
-
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Tuesday'}">
                                             <%if (count == 0) {
                                                     x = 1;
+                                                    temp++;
                                                 } else {
-                                                    x = 1 - x - 1;
+                                                    x = 1 - x - count;
                                                 }
                                             %>
-                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
+                                            <%if (x > 0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
                                             </td>
                                             <%count++;%>
                                         </c:when>
-
                                         <%-- Wednesday --%>
-
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Wednesday'}">
                                             <%if (count == 0) {
                                                     x = 2;
+                                                    temp++;
                                                 } else {
-                                                    x = 2 - x - 1;
+                                                    x = 2 - x - count;
                                                 }
                                             %>
-                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
+                                            <%if (x > 0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
                                             </td>
                                             <%count++;%>
                                         </c:when>
-
                                         <%-- Thursday --%>
-
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Thursday'}">
                                             <%if (count == 0) {
                                                     x = 3;
+                                                    temp++;
+                                                } else if (temp >= 1 && count >= 2) {
+                                                    x = 3 - x - count - temp;
                                                 } else {
-                                                    x = 3 - x - 1;
+                                                    x = 3 - x - count;
                                                 }
                                             %>
-                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
+                                            <%if (x > 0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
                                             </td>
                                             <%count++;%>
                                         </c:when>
-
                                         <%-- Friday --%>
-
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Friday'}">
                                             <%if (count == 0) {
                                                     x = 4;
+                                                } else if (temp >= 1 && count >= 2) {
+                                                    x = 4 - x - count - temp;
                                                 } else {
-                                                    x = 4 - x - 1;
+                                                    x = 4 - x - count;
                                                 }
                                             %>
-                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
+                                            <%if (x > 0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
                                             </td>
                                             <%count++;%>
                                         </c:when>
-
                                         <%-- Saturday--%>
-
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Saturday'}">
                                             <%if (count == 0) {
                                                     x = 5;
+                                                } else if (temp >= 1 && count >= 2) {
+                                                    x = 5 - x - count - temp;
                                                 } else {
-                                                    x = 5 - x - 1;
+                                                    x = 5 - x - count;
                                                 }
                                             %>
-                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>
+                                            <%if (x > 0) {%><td colspan="<%=x%>"></td><%}%>
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
                                             </td>
                                             <%count++;%>
                                         </c:when>
-
                                         <%-- Sunday--%>
-
                                         <c:when test="${s.slot_id==c.slot.slot_id && c.dow=='Sunday'}">
                                             <%if (count == 0) {
                                                     x = 6;
+                                                } else if (temp >= 1 && count >= 2) {
+                                                    x = 6 - x - count - temp;
                                                 } else {
-                                                    x = 6 - x - 1;
+                                                    x = 6 - x - count;
                                                 }
                                             %>
-                                            <%if (x!=0) {%><td colspan="<%=x%>"></td><%}%>       
+                                            <%if (x > 0) {%><td colspan="<%=x%>"></td><%}%>       
                                             <td>
                                                 <a href="get?id=${c.id}&cid=${c.classroom.cid}&slot_id=${c.slot.slot_id}" >${c.classroom.cname}</a> <br>     
                                             </td>
